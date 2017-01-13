@@ -1,0 +1,113 @@
+{
+  "project_info": {
+    "project_number": "1033859901300",
+    "firebase_url": "https://cwbf-d92ef.firebaseio.com",
+    "project_id": "cwbf-d92ef",
+    "storage_bucket": "cwbf-d92ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033859901300:android:25b57122186c9168",
+        "android_client_info": {
+          "package_name": "carcare.doth.carcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033859901300-8hcj13ipb4gc073udjde10od4t7j7542.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "carcare.doth.carcare",
+            "certificate_hash": "89AFAAFD6518FD29C6686708CB59039F081B9E56"
+          }
+        },
+        {
+          "client_id": "1033859901300-b1cau8at58ofqse2j1iqa389jj76m7n8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEXl3M8Ds-9Jx06zVCZhhUm6ZEgzbL4hQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033859901300-7qe942057sqbc1l0ueijn7acsulekviu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "CWBSOLUTIONS"
+              }
+            },
+            {
+              "client_id": "1033859901300-b1cau8at58ofqse2j1iqa389jj76m7n8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033859901300:android:c2821d985baaa376",
+        "android_client_info": {
+          "package_name": "com.dumindudulanga.cwb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033859901300-4r8blmkh7bvpm2nth25fumlbkvpntg0q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dumindudulanga.cwb",
+            "certificate_hash": "CD98559B7500482257CDC8E387909EDE825CF971"
+          }
+        },
+        {
+          "client_id": "1033859901300-b1cau8at58ofqse2j1iqa389jj76m7n8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEXl3M8Ds-9Jx06zVCZhhUm6ZEgzbL4hQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033859901300-7qe942057sqbc1l0ueijn7acsulekviu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "CWBSOLUTIONS"
+              }
+            },
+            {
+              "client_id": "1033859901300-b1cau8at58ofqse2j1iqa389jj76m7n8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
