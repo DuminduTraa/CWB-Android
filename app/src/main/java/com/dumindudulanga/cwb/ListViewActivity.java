@@ -34,9 +34,8 @@ public class ListViewActivity extends AppCompatActivity {
 
                 Iterable<DataSnapshot> iterator = dataSnapshot.getChildren();
 
-                for (DataSnapshot child : iterator){
-                    placeNames.add(child.child("stName").getValue().toString());
-                    Log.d("Children",placeNames.get(0)+"");
+                for (DataSnapshot r : iterator){
+                    placeNames.add(r.child("stName").getValue().toString());
                 }
 
                 ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(ListViewActivity.this,

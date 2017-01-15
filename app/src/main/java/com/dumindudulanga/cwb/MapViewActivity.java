@@ -2,6 +2,9 @@ package com.dumindudulanga.cwb;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -9,6 +12,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MapViewActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -37,10 +45,35 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng singapore = new LatLng(1.3521,103.8198);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(singapore));
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("CarWashBay");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> iterator = dataSnapshot.getChildren();
+
+                for (DataSnapshot r : iterator){
+                    try {
+                        double latitude = Double.parseDouble(r.child("locationGlatitude").getValue().toString());
+                        double longitude = Double.parseDouble(r.child("locationGlongitude").getValue().toString());
+
+                        LatLng location = new LatLng(latitude,longitude);
+
+                        mMap.addMarker(new MarkerOptions().position(location).title(r.child("stName").getValue().toString()));
+                    }
+                    catch (NullPointerException e){
+                        Log.d("LatLng","Latitude and Longitude not available");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }
