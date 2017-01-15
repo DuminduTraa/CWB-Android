@@ -11,6 +11,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,8 +46,12 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng singapore = new LatLng(1.3521,103.8198);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(singapore));
+        LatLng southWest = new LatLng(1.27, 103.67);
+        LatLng northEast = new LatLng(1.41, 103.99);
+        LatLngBounds SINGAPORE = new LatLngBounds(southWest,northEast);
+        // Set the camera to the greatest possible zoom level that includes the
+        // bounds
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(SINGAPORE, 0));
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("CarWashBay");
