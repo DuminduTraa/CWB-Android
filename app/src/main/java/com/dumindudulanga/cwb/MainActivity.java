@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener listViewButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, StationDescriptionActivity.class);
+            Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
             startActivity(intent);
         }
     };
