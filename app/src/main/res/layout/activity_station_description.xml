@@ -10,4 +10,409 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dumindudulanga.cwb.StationDescriptionActivity">
 
-</RelativeLayout>
+
+
+    <TabHost
+        android:id="@+id/tabHost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"></TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/tab1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+                    android:text="Water" />
+
+                <TextView
+                    android:id="@+id/water_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    android:text="Water" />
+
+                <Button
+                    android:text="Activate"
+                    android:background="@android:color/holo_orange_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/activate_water"
+                    style="@style/Widget.AppCompat.Button.Borderless" />
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/background_dark"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:text="Route"
+                        android:background="@android:color/holo_purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/route_water"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+                    <Button
+                        android:text="Feedback"
+                        android:background="@android:color/holo_purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/feedback_water"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+                    <Button
+                        android:text="Prebook"
+                        android:background="@android:color/holo_purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/prebook_water"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:background="@android:color/background_dark"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:textColor="@android:color/white"
+                        android:text="Lots Current Available" />
+
+                    <TextView
+                        android:id="@+id/lots_water"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textSize="25dp"
+                        android:textColor="@android:color/holo_orange_light"
+                        android:text="1" />
+
+                    <Button
+                        android:text="BOOK LOT"
+                        android:background="@android:color/holo_orange_light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/booklot_water"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+
+
+
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tab2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#da8200"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+                    android:text="Vaccum" />
+
+                <TextView
+                    android:id="@+id/vaccum_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    android:text="Water" />
+
+                <Button
+                    android:text="Activate"
+                    android:background="@android:color/holo_purple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/activate_vaccum"
+                    style="@style/Widget.AppCompat.Button.Borderless" />
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/background_dark"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:text="Route"
+                        android:background="@android:color/holo_purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/route_vaccum"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+                    <Button
+                        android:text="Feedback"
+                        android:background="@android:color/holo_purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/feedback_vaccumr"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+                    <Button
+                        android:text="Prebook"
+                        android:background="@android:color/holo_purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/prebook_vaccum"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:background="@android:color/background_dark"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:textColor="@android:color/white"
+                        android:text="Lots Current Available" />
+
+                    <TextView
+                        android:id="@+id/lots_vaccum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textSize="25dp"
+                        android:textColor="@android:color/holo_orange_light"
+                        android:text="1" />
+
+                    <Button
+                        android:text="BOOK LOT"
+                        android:background="@android:color/holo_orange_light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/booklot_vaccum"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+
+
+
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tab3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#5b89ff"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+                    android:text="Jet" />
+
+                <TextView
+                    android:id="@+id/jet_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    android:text="Water" />
+
+                <Button
+                    android:text="Activate"
+                    android:background="@android:color/holo_purple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/activate_jet"
+                    style="@style/Widget.AppCompat.Button.Borderless" />
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/background_dark"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:text="Route"
+                        android:background="@android:color/holo_purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/route_jet"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+                    <Button
+                        android:text="Feedback"
+                        android:background="@android:color/holo_purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/feedback_jet"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+                    <Button
+                        android:text="Prebook"
+                        android:background="@android:color/holo_purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/prebook_jet"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:background="@android:color/background_dark"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:textColor="@android:color/white"
+                        android:text="Lots Current Available" />
+
+                    <TextView
+                        android:id="@+id/lots_jet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textSize="25dp"
+                        android:textColor="@android:color/holo_orange_light"
+                        android:text="1" />
+
+                    <Button
+                        android:text="BOOK LOT"
+                        android:background="@android:color/holo_orange_light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/booklot_jet"
+                        style="@style/Widget.AppCompat.Button.Borderless" />
+
+
+
+
+
+
+
+                </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
+    </TabHost>
+
+
+    </RelativeLayout>
