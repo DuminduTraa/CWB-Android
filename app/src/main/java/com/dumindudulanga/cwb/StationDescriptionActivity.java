@@ -54,7 +54,7 @@ public class StationDescriptionActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Log.e("AAA",dataSnapshot.child("hasWater").getValue()+"");
-
+                //sdsd
                 if(dataSnapshot.child("hasWater").getValue().toString().equals("true")){
                     String waterCents =  dataSnapshot.child("WaterCents").getValue().toString();
 
