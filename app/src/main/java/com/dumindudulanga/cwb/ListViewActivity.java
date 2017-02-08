@@ -43,6 +43,7 @@ public class ListViewActivity extends AppCompatActivity {
                 for (DataSnapshot r : iterator){
                     objectIDs.add(r);
                     //Log.e("AAA",r.getKey());
+
                     placeNames.add(r.child("stName").getValue().toString());
                 }
 

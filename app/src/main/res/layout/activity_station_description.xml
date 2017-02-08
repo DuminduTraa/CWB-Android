@@ -118,6 +118,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="0dp"
                     android:background="@android:color/background_dark"
+                    android:id="@+id/control_water"
                     android:orientation="vertical">
 
                     <TextView
@@ -150,6 +151,18 @@
                         android:layout_marginTop="10dp"
                         android:id="@+id/booklot_water"
                         style="@style/Widget.AppCompat.Button.Borderless" />
+
+                    <RatingBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:visibility="invisible"
+                        android:progressBackgroundTint="@color/wallet_secondary_text_holo_dark"
+                        android:progressTint="@color/colorAccent"
+                        android:secondaryProgressTint="@color/colorAccent"
+                        android:id="@+id/rating_water"
+                        android:numStars="5"
+                        android:rating="0"/>
 
 
 
@@ -220,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:layout_marginLeft="20dp"
-                        android:id="@+id/feedback_vaccumr"
+                        android:id="@+id/feedback_vaccum"
                         style="@style/Widget.AppCompat.Button.Borderless" />
 
                     <Button
@@ -244,6 +257,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="0dp"
                     android:background="@android:color/background_dark"
+                    android:id="@+id/control_vaccum"
                     android:orientation="vertical">
 
                     <TextView
@@ -277,7 +291,17 @@
                         android:id="@+id/booklot_vaccum"
                         style="@style/Widget.AppCompat.Button.Borderless" />
 
-
+                    <RatingBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:visibility="invisible"
+                        android:progressBackgroundTint="@color/wallet_secondary_text_holo_dark"
+                        android:progressTint="@color/colorAccent"
+                        android:secondaryProgressTint="@color/colorAccent"
+                        android:id="@+id/rating_vaccum"
+                        android:numStars="5"
+                        android:rating="0"/>
 
 
 
@@ -369,6 +393,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="0dp"
                     android:background="@android:color/background_dark"
+                    android:id="@+id/control_jet"
                     android:orientation="vertical">
 
                     <TextView
@@ -403,7 +428,17 @@
                         style="@style/Widget.AppCompat.Button.Borderless" />
 
 
-
+                    <RatingBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:visibility="invisible"
+                        android:progressBackgroundTint="@color/wallet_secondary_text_holo_dark"
+                        android:progressTint="@color/colorAccent"
+                        android:secondaryProgressTint="@color/colorAccent"
+                        android:id="@+id/rating_jet"
+                        android:numStars="5"
+                        android:rating="0"/>
 
 
 
