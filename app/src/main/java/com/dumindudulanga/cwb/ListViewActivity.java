@@ -18,17 +18,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
-
-        final ArrayList<String> placeNames = new ArrayList<String>();
-        final ArrayList<DataSnapshot> objectIDs = new ArrayList<DataSnapshot>();
+        final ArrayList<TileDetail> stationDetails = new ArrayList<TileDetail>();
+        final ArrayList<String> objectIDs = new ArrayList<String>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("CarWashBay");
@@ -41,13 +37,20 @@ public class ListViewActivity extends AppCompatActivity {
                 Iterable<DataSnapshot> iterator = dataSnapshot.getChildren();
 
                 for (DataSnapshot r : iterator){
-                    objectIDs.add(r);
-                    //Log.e("AAA",r.getKey());
-                    placeNames.add(r.child("stName").getValue().toString());
+                    objectIDs.add(r.getKey());
+                    String hasWater = r.child("hasWater").getValue().toString();
+                    String hasVacuum = r.child("hasVacuum").getValue().toString();
+                    String hasJet = r.child("hasJet").getValue().toString();
+                    String stationName = r.child("stName").getValue().toString();
+                    String stationAddress = r.child("blkNo").getValue().toString();
+                    String distance = "N/A";
+                    String noOfLots = r.child("availableBays").getValue().toString();
+
+                    stationDetails.add(new TileDetail(hasWater, hasVacuum, hasJet, stationName,
+                            stationAddress, distance, noOfLots));
                 }
 
-                ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(ListViewActivity.this,
-                        android.R.layout.simple_expandable_list_item_1, placeNames);
+                CustomAdapter itemsAdapter = new CustomAdapter(ListViewActivity.this,stationDetails);
 
                 ListView listView = (ListView)findViewById(R.id.list_view);
                 listView.setAdapter(itemsAdapter);
@@ -55,10 +58,8 @@ public class ListViewActivity extends AppCompatActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //Log.e("AAA",objectIDs.get(position).child("stName").getValue().toString());
-
                         Intent intent = new Intent(getBaseContext(), StationDescriptionActivity.class);
-                        intent.putExtra("ObjectID",objectIDs.get(position).getKey());
+                        intent.putExtra("ObjectID",objectIDs.get(position));
                         startActivity(intent);
                     }
                 });
@@ -69,7 +70,4 @@ public class ListViewActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

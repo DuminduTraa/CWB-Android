@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         Button listViewButton = (Button)findViewById(R.id.list_view_button);
         Button mapViewButton = (Button)findViewById(R.id.map_view_button);
         listViewButton.setOnClickListener(listViewButtonListener);
-        mapViewButton.setOnClickListener(mapViewbuttonListener);
+        mapViewButton.setOnClickListener(mapViewButtonListener);
     }
 
     private View.OnClickListener listViewButtonListener = new View.OnClickListener() {
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener mapViewbuttonListener = new View.OnClickListener() {
+    private View.OnClickListener mapViewButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainActivity.this, MapViewActivity.class);

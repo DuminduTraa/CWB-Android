@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_station_description"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.dumindudulanga.cwb.StationDescriptionActivity">
-
-
 
     <TabHost
         android:id="@+id/tabHost"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +21,6 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"></TabWidget>
 
             <FrameLayout
@@ -107,9 +100,6 @@
                         android:id="@+id/prebook_water"
                         style="@style/Widget.AppCompat.Button.Borderless" />
 
-
-
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -150,16 +140,9 @@
                         android:layout_marginTop="10dp"
                         android:id="@+id/booklot_water"
                         style="@style/Widget.AppCompat.Button.Borderless" />
-
-
-
-
-
-
-
                 </LinearLayout>
-
             </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/tab2"
@@ -233,13 +216,9 @@
                         android:id="@+id/prebook_vaccum"
                         style="@style/Widget.AppCompat.Button.Borderless" />
 
-
-
-
                 </LinearLayout>
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="0dp"
@@ -247,7 +226,6 @@
                     android:orientation="vertical">
 
                     <TextView
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -277,14 +255,9 @@
                         android:id="@+id/booklot_vaccum"
                         style="@style/Widget.AppCompat.Button.Borderless" />
 
-
-
-
-
-
-
                 </LinearLayout>
             </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/tab3"
@@ -321,7 +294,6 @@
                     style="@style/Widget.AppCompat.Button.Borderless" />
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -357,14 +329,9 @@
                         android:layout_marginLeft="20dp"
                         android:id="@+id/prebook_jet"
                         style="@style/Widget.AppCompat.Button.Borderless" />
-
-
-
-
                 </LinearLayout>
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="0dp"
@@ -372,7 +339,6 @@
                     android:orientation="vertical">
 
                     <TextView
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -401,13 +367,6 @@
                         android:layout_marginTop="10dp"
                         android:id="@+id/booklot_jet"
                         style="@style/Widget.AppCompat.Button.Borderless" />
-
-
-
-
-
-
-
                 </LinearLayout>
         </LinearLayout>
     </FrameLayout>
@@ -415,4 +374,4 @@
     </TabHost>
 
 
-    </RelativeLayout>
+    </LinearLayout>

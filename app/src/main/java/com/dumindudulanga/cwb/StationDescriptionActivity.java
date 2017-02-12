@@ -22,10 +22,10 @@ public class StationDescriptionActivity extends AppCompatActivity {
 
     public TabHost host;
     public String ObjectID;
+    public TextView waterPriceTextView;
+    public TextView jetPriceTextView;
+    public TextView vacumPriceTextView;
 
-    public TextView water_price;
-    public TextView jet_price;
-    public TextView vaccum_price;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,18 +34,16 @@ public class StationDescriptionActivity extends AppCompatActivity {
         host = (TabHost)findViewById(R.id.tabHost);
         host.setup();
 
-
         setupTab((LinearLayout)findViewById(R.id.tab1), "",1);
         setupTab((LinearLayout)findViewById(R.id.tab2), "",2);
         setupTab((LinearLayout)findViewById(R.id.tab3), "",3);
 
-        water_price = (TextView)findViewById(R.id.water_price);
-        jet_price = (TextView)findViewById(R.id.jet_price);
-        vaccum_price = (TextView)findViewById(R.id.vaccum_price);
+        waterPriceTextView = (TextView)findViewById(R.id.water_price);
+        jetPriceTextView = (TextView)findViewById(R.id.jet_price);
+        vacumPriceTextView = (TextView)findViewById(R.id.vaccum_price);
 
         Intent intent = getIntent();
         ObjectID = intent.getStringExtra("ObjectID");
-
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("CarWashBay").child(ObjectID);
@@ -53,35 +51,32 @@ public class StationDescriptionActivity extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.e("AAA",dataSnapshot.child("hasWater").getValue()+"");
-
                 if(dataSnapshot.child("hasWater").getValue().toString().equals("true")){
                     String waterCents =  dataSnapshot.child("WaterCents").getValue().toString();
-
                     String waterAmount =  dataSnapshot.child("waterAmount").getValue().toString();
-
-                    water_price.setText(waterCents+"c"+" for "+waterAmount);
-
-                }
+                    waterPriceTextView.setText(waterCents+"c"+" for "+waterAmount);
+                 }
                 else{
-
+                    waterPriceTextView.setText("N/A");
                 }
 
                 if(dataSnapshot.child("hasJet").getValue().toString().equals("true")){
-
+                    String jetDollar = dataSnapshot.child("jetDollar").getValue().toString();
+                    String jetAmount = dataSnapshot.child("jetAmount").getValue().toString();
+                    jetPriceTextView.setText("$" + jetDollar + " for " + jetAmount);
                 }
                 else{
-
+                    jetPriceTextView.setText("N/A");
                 }
 
                 if(dataSnapshot.child("hasVacuum").getValue().toString().equals("true")){
-
+                    String vacuumDollar = dataSnapshot.child("VacuumDollar").getValue().toString();
+                    String vacuumAmount = dataSnapshot.child("vacuumAmount").getValue().toString();
+                    vacumPriceTextView.setText("$" + vacuumDollar + " for " + vacuumAmount);
                 }
                 else{
-
+                    vacumPriceTextView.setText("N/A");
                 }
-
-
             }
 
             @Override
@@ -89,31 +84,21 @@ public class StationDescriptionActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
     }
 
-
     private static View createTabView(final Context context, final String text,int index) {
-
         View view = null;
         switch(index){
             case 1: view = LayoutInflater.from(context).inflate(R.layout.tab_water, null); break;
-
             case 2: view = LayoutInflater.from(context).inflate(R.layout.tab_vaccum, null);break;
-
             case 3: view = LayoutInflater.from(context).inflate(R.layout.tab_jet, null);break;
         }
-
         return view;
     }
 
     private void setupTab(final View view, final String tag,int index) {
-        View tabview = createTabView(host.getContext(), tag,index);
-        TabHost.TabSpec setContent = host.newTabSpec(tag).setIndicator(tabview).setContent(new TabHost.TabContentFactory() {
+        View tabView = createTabView(host.getContext(), tag,index);
+        TabHost.TabSpec setContent = host.newTabSpec(tag).setIndicator(tabView).setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
                 return view;
             }
