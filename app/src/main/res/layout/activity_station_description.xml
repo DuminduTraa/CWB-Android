@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_station_description"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dumindudulanga.cwb.StationDescriptionActivity">
+
+
 
     <TabHost
         android:id="@+id/tabHost"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,6 +27,7 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"></TabWidget>
 
             <FrameLayout
@@ -108,10 +115,10 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="0dp"
                     android:background="@android:color/background_dark"
+                    android:id="@+id/control_water"
                     android:orientation="vertical">
 
                     <TextView
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -140,9 +147,22 @@
                         android:layout_marginTop="10dp"
                         android:id="@+id/booklot_water"
                         style="@style/Widget.AppCompat.Button.Borderless" />
-                </LinearLayout>
-            </LinearLayout>
 
+                    <RatingBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:visibility="invisible"
+                        android:progressBackgroundTint="@color/wallet_secondary_text_holo_dark"
+                        android:progressTint="@color/colorAccent"
+                        android:secondaryProgressTint="@color/colorAccent"
+                        android:id="@+id/rating_water"
+                        android:numStars="5"
+                        android:rating="0"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/tab2"
@@ -179,7 +199,6 @@
                     style="@style/Widget.AppCompat.Button.Borderless" />
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -203,7 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:layout_marginLeft="20dp"
-                        android:id="@+id/feedback_vaccumr"
+                        android:id="@+id/feedback_vaccum"
                         style="@style/Widget.AppCompat.Button.Borderless" />
 
                     <Button
@@ -223,6 +242,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="0dp"
                     android:background="@android:color/background_dark"
+                    android:id="@+id/control_vaccum"
                     android:orientation="vertical">
 
                     <TextView
@@ -254,6 +274,18 @@
                         android:layout_marginTop="10dp"
                         android:id="@+id/booklot_vaccum"
                         style="@style/Widget.AppCompat.Button.Borderless" />
+
+                    <RatingBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:visibility="invisible"
+                        android:progressBackgroundTint="@color/wallet_secondary_text_holo_dark"
+                        android:progressTint="@color/colorAccent"
+                        android:secondaryProgressTint="@color/colorAccent"
+                        android:id="@+id/rating_vaccum"
+                        android:numStars="5"
+                        android:rating="0"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -336,6 +368,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="0dp"
                     android:background="@android:color/background_dark"
+                    android:id="@+id/control_jet"
                     android:orientation="vertical">
 
                     <TextView
@@ -367,6 +400,19 @@
                         android:layout_marginTop="10dp"
                         android:id="@+id/booklot_jet"
                         style="@style/Widget.AppCompat.Button.Borderless" />
+
+                    <RatingBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:visibility="invisible"
+                        android:progressBackgroundTint="@color/wallet_secondary_text_holo_dark"
+                        android:progressTint="@color/colorAccent"
+                        android:secondaryProgressTint="@color/colorAccent"
+                        android:id="@+id/rating_jet"
+                        android:numStars="5"
+                        android:rating="0"/>
+
                 </LinearLayout>
         </LinearLayout>
     </FrameLayout>
