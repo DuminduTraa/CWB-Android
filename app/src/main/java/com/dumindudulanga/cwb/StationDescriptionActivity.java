@@ -25,35 +25,33 @@ public class StationDescriptionActivity extends AppCompatActivity {
 
     public TabHost host;
     public String ObjectID;
+
     public TextView waterPriceTextView;
+    public TextView vacuumPriceTextView;
     public TextView jetPriceTextView;
-    public TextView vacumPriceTextView;
 
-    public TextView water_price;
-    public TextView jet_price;
-    public TextView vaccum_price;
+    public Button waterRouteButton;
+    public Button vacuumRouteButton;
+    public Button jetRouteButton;
 
-    public Button water_route;
-    public Button jet_route;
-    public Button vaccum_route;
+    public Button waterFeedbackButton;
+    public Button vacuumFeedbackButton;
+    public Button jetFeedbackButton;
 
-    public Button water_feedback;
-    public Button jet_feedback;
-    public Button vaccum_feedback;
+    public Button waterPreBookButton;
+    public Button vacuumPreBookButton;
+    public Button jetPreBookButton;
 
-    public Button water_prebook;
-    public Button jet_prebook;
-    public Button vaccum_prebook;
+    public LinearLayout controlWaterLayout;
+    public LinearLayout controlVacuumLayout;
+    public LinearLayout controlJetLayout;
 
-    public LinearLayout control_water;
-    public LinearLayout control_jet;
-    public LinearLayout control_vaccum;
-
-    public RatingBar rating_water;
-    public RatingBar rating_jet;
-    public RatingBar rating_vaccum;
+    public RatingBar waterRatingBar;
+    public RatingBar vacuumRatingBar;
+    public RatingBar jetRatingBar;
 
     public boolean ratingVisibility = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,13 +64,13 @@ public class StationDescriptionActivity extends AppCompatActivity {
         setupTab((LinearLayout)findViewById(R.id.tab2), "",2);
         setupTab((LinearLayout)findViewById(R.id.tab3), "",3);
 
-        water_price = (TextView)findViewById(R.id.water_price);
-        jet_price = (TextView)findViewById(R.id.jet_price);
-        vaccum_price = (TextView)findViewById(R.id.vaccum_price);
+        waterPriceTextView = (TextView)findViewById(R.id.water_price);
+        vacuumPriceTextView = (TextView)findViewById(R.id.vacuum_price);
+        jetPriceTextView = (TextView)findViewById(R.id.jet_price);
 
-        water_feedback = (Button)findViewById(R.id.feedback_water);
-        jet_feedback = (Button)findViewById(R.id.feedback_jet);
-        vaccum_feedback = (Button)findViewById(R.id.feedback_vaccum);
+        waterFeedbackButton = (Button)findViewById(R.id.feedback_water);
+        vacuumFeedbackButton = (Button)findViewById(R.id.feedback_vacuum);
+        jetFeedbackButton = (Button)findViewById(R.id.feedback_jet);
 
         //configureFeedBack();
         Intent intent = getIntent();
@@ -85,7 +83,6 @@ public class StationDescriptionActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Log.e("AAA",dataSnapshot.child("hasWater").getValue()+"");
-                //sdsd
 
                 if(dataSnapshot.child("hasWater").getValue().toString().equals("true")){
                     String waterCents =  dataSnapshot.child("WaterCents").getValue().toString();
@@ -93,27 +90,28 @@ public class StationDescriptionActivity extends AppCompatActivity {
                     waterPriceTextView.setText(waterCents+"c"+" for "+waterAmount);
                  }
                 else{
-                    water_price.setText("N/A");
+                    waterPriceTextView.setText("N/A");
+                }
+
+                if(dataSnapshot.child("hasVacuum").getValue().toString().equals("true")){
+                    String vacuumDollar =  dataSnapshot.child("VacuumDollar").getValue().toString();
+                    String vacuumAmount =  dataSnapshot.child("vacuumAmount").getValue().toString();
+                    vacuumPriceTextView.setText("$"+vacuumDollar+" for "+vacuumAmount);
+                }
+                else{
+                    vacuumPriceTextView.setText("N/A");
                 }
 
                 if(dataSnapshot.child("hasJet").getValue().toString().equals("true")){
                     String jetCents =  dataSnapshot.child("JetCents").getValue().toString();
                     String jetAmount =  dataSnapshot.child("JetAmount").getValue().toString();
-                    jet_price.setText(jetCents+"c"+" for "+jetAmount);
+                    jetPriceTextView.setText(jetCents+"c"+" for "+jetAmount);
 
                 }
                 else{
-                    jet_price.setText("N/A");
+                    jetPriceTextView.setText("N/A");
                 }
 
-                if(dataSnapshot.child("hasVacuum").getValue().toString().equals("true")){
-                    String vaccumDollar =  dataSnapshot.child("VacuumDollar").getValue().toString();
-                    String vaccumAmount =  dataSnapshot.child("vacuumAmount").getValue().toString();
-                    vaccum_price.setText("$"+vaccumDollar+" for "+vaccumAmount);
-                }
-                else{
-                    vaccum_price.setText("N/A");
-                }
                 configureFeedBack();
             }
 
@@ -138,13 +136,12 @@ public class StationDescriptionActivity extends AppCompatActivity {
             case 2: view = LayoutInflater.from(context).inflate(R.layout.tab_vaccum, null);break;
             case 3: view = LayoutInflater.from(context).inflate(R.layout.tab_jet, null);break;
         }
-
         return view;
     }
 
     private void setupTab(final View view, final String tag,int index) {
-        View tabview = createTabView(host.getContext(), tag,index);
-        TabHost.TabSpec setContent = host.newTabSpec(tag).setIndicator(tabview).setContent(new TabHost.TabContentFactory() {
+        View tabView = createTabView(host.getContext(), tag,index);
+        TabHost.TabSpec setContent = host.newTabSpec(tag).setIndicator(tabView).setContent(new TabHost.TabContentFactory() {
             public View createTabContent(String tag) {
                 return view;
             }
@@ -155,67 +152,63 @@ public class StationDescriptionActivity extends AppCompatActivity {
 
     public  void configureFeedBack(){
 
-        control_water = (LinearLayout)findViewById(R.id.control_water);
-        control_jet = (LinearLayout)findViewById(R.id.control_jet);
-        control_vaccum = (LinearLayout)findViewById(R.id.control_vaccum);
+        controlWaterLayout = (LinearLayout)findViewById(R.id.control_water);
+        controlVacuumLayout = (LinearLayout)findViewById(R.id.control_vacuum);
+        controlJetLayout = (LinearLayout)findViewById(R.id.control_jet);
 
-        rating_water =  (RatingBar)findViewById(R.id.rating_water);
-        rating_jet =  (RatingBar)findViewById(R.id.rating_jet);
-        rating_vaccum =  (RatingBar)findViewById(R.id.rating_vaccum);
+        waterRatingBar =  (RatingBar)findViewById(R.id.rating_water);
+        vacuumRatingBar =  (RatingBar)findViewById(R.id.rating_vacuum);
+        jetRatingBar =  (RatingBar)findViewById(R.id.rating_jet);
 
         View.OnClickListener feedbackListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("YOYO","sdsd00jknkjxx");
 
                 if (ratingVisibility == false){
-                    rating_water.setVisibility(View.VISIBLE);
-                    rating_jet.setVisibility(View.VISIBLE);
-                    rating_vaccum.setVisibility(View.VISIBLE);
+                    waterRatingBar.setVisibility(View.VISIBLE);
+                    vacuumRatingBar.setVisibility(View.VISIBLE);
+                    jetRatingBar.setVisibility(View.VISIBLE);
 
                 }
                 else{
-                    rating_water.setVisibility(View.INVISIBLE);
-                    rating_jet.setVisibility(View.INVISIBLE);
-                    rating_vaccum.setVisibility(View.INVISIBLE);
+                    waterRatingBar.setVisibility(View.INVISIBLE);
+                    vacuumRatingBar.setVisibility(View.INVISIBLE);
+                    jetRatingBar.setVisibility(View.INVISIBLE);
                 }
                  ratingVisibility = !ratingVisibility;
 
-//                vaccum_price.setText("sd");
-//                jet_price.setText("sd");
-//                water_price.setText("d");
-
+//                vacuumPriceTextView.setText("sd");
+//                jetPriceTextView.setText("sd");
+//                waterPriceTextView.setText("d");
+//
 //                ratingBar = new RatingBar(getApplicationContext());
 //                ratingBar.setNumStars(5);
 //                ratingBar.setStepSize(1);
 //                ratingBar.setRating(0);
-
-//                ViewGroup parent = (ViewGroup) control_water.getParent();
-//                parent.removeView(control_water);
-//                control_water.addView(ratingBar,0);
-//                parent.addView(control_water);
 //
-//                parent = (ViewGroup) control_vaccum.getParent();
-//                parent.removeView(control_vaccum);
-//                control_vaccum.addView(ratingBar,0);
-//                parent.addView(control_vaccum);
+//                ViewGroup parent = (ViewGroup) controlWaterLayout.getParent();
+//                parent.removeView(controlWaterLayout);
+//                controlWaterLayout.addView(ratingBar,0);
+//                parent.addView(controlWaterLayout);
 //
-//                parent = (ViewGroup) control_jet.getParent();
-//                parent.removeView(control_jet);
-//                control_jet.addView(ratingBar,0);
-//                parent.addView(control_jet);
-
-//                control_water.addView(ratingBar,0);
-//                control_vaccum.addView(ratingBar,0);
-//                control_jet.addView(ratingBar,0);
+//                parent = (ViewGroup) controlVacuumLayout.getParent();
+//                parent.removeView(controlVacuumLayout);
+//                controlVacuumLayout.addView(ratingBar,0);
+//                parent.addView(controlVacuumLayout);
+//
+//                parent = (ViewGroup) controlJetLayout.getParent();
+//                parent.removeView(controlJetLayout);
+//                controlJetLayout.addView(ratingBar,0);
+//                parent.addView(controlJetLayout);
+//
+//                controlWaterLayout.addView(ratingBar,0);
+//                controlVacuumLayout.addView(ratingBar,0);
+//                controlJetLayout.addView(ratingBar,0);
             }
         };
-        water_feedback.setOnClickListener(feedbackListener);
-
-        jet_feedback.setOnClickListener(feedbackListener);
-
-        vaccum_feedback.setOnClickListener(feedbackListener);
-
+        waterFeedbackButton.setOnClickListener(feedbackListener);
+        vacuumFeedbackButton.setOnClickListener(feedbackListener);
+        jetFeedbackButton.setOnClickListener(feedbackListener);
 
     }
 }
