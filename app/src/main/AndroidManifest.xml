@@ -38,7 +38,8 @@
 
         <activity
             android:name=".MapViewActivity"
-            android:label="@string/title_activity_map_view"></activity>
+            android:label="@string/title_activity_map_view" />
+        <activity android:name=".DescriptionActivity2"></activity>
     </application>
 
 </manifest>
