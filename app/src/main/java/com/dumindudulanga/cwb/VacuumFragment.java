@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
@@ -17,15 +16,10 @@ import android.widget.ScrollView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -90,8 +84,8 @@ public class VacuumFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void refreshComplete() {
-        if (getActivity() instanceof DescriptionActivity2) {
-            ((DescriptionActivity2) getActivity()).refreshComplete();
+        if (getActivity() instanceof DescriptionActivity) {
+            ((DescriptionActivity) getActivity()).refreshComplete();
         }
     }
 

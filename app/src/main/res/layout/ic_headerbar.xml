@@ -26,8 +26,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:text="更多"
-        android:textColor="#435356"
-        android:textSize="16sp" />
+         android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/iv_spit"

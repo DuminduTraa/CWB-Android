@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DescriptionActivity2 extends AppCompatActivity implements ViewPager.OnPageChangeListener, PtrHandler, View.OnClickListener {
+public class DescriptionActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, PtrHandler, View.OnClickListener {
 
     private PtrClassicFrameLayout pfl_root;
     private ScrollableLayout sl_root;
@@ -34,7 +34,6 @@ public class DescriptionActivity2 extends AppCompatActivity implements ViewPager
     private TextView tv_right;
     private ImageView iv_spit;
     private TextView tv_name;
-    private TextView tv_signature;
     private ImageView iv_avatar;
     private RelativeLayout ly_page1;
     private TextView tv_page1;
@@ -54,7 +53,7 @@ public class DescriptionActivity2 extends AppCompatActivity implements ViewPager
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_description2);
+        setContentView(R.layout.activity_description);
         initView();
     }
 
@@ -66,7 +65,6 @@ public class DescriptionActivity2 extends AppCompatActivity implements ViewPager
         tv_right = (TextView) findViewById(R.id.tv_right);
         iv_spit = (ImageView) findViewById(R.id.iv_spit);
         tv_name = (TextView) findViewById(R.id.tv_name);
-        tv_signature = (TextView) findViewById(R.id.tv_signature);
         iv_avatar = (ImageView) findViewById(R.id.iv_avatar);
 
         ly_page1 = (RelativeLayout) findViewById(R.id.ly_page1);
@@ -123,7 +121,6 @@ public class DescriptionActivity2 extends AppCompatActivity implements ViewPager
         sl_root.getHelper().setCurrentScrollableContainer(fragmentList.get(0));
 
         tv_right.setOnClickListener(this);
-        tv_signature.setOnClickListener(this);
         ly_page1.setOnClickListener(this);
         ly_page2.setOnClickListener(this);
         ly_page3.setOnClickListener(this);

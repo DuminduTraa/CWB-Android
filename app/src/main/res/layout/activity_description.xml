@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DescriptionActivity2">
+    tools:context=".DescriptionActivity">
 
     <include
         android:id="@+id/ic_headerbar"
