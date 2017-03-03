@@ -90,7 +90,6 @@ public class VacuumFragment extends BaseFragment implements View.OnClickListener
     }
 
 
-
     public void getDataTask() {
         getDataTask(true);
     }
@@ -117,8 +116,6 @@ public class VacuumFragment extends BaseFragment implements View.OnClickListener
                 break;
         }
     }
-
-
 
     public class RecyclerBean {
         public String title;

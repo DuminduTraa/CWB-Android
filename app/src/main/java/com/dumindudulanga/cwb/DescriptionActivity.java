@@ -180,7 +180,6 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
                 vp_scroll.setCurrentItem(2);
                 break;
         }
-
     }
 
     @Override
