@@ -1,5 +1,6 @@
 package com.dumindudulanga.cwb;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,11 +49,17 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
     private float maxScrollHeight;
     private final List<BaseFragment> fragmentList = new ArrayList<>();
 
+    private String objectID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        objectID = intent.getStringExtra("ObjectID");
+
         setContentView(R.layout.activity_description);
         initView();
     }
@@ -113,9 +120,9 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
         pfl_root.setKeepHeaderWhenRefresh(true);
 
         CommonFragementPagerAdapter commonFragementPagerAdapter = new CommonFragementPagerAdapter(getSupportFragmentManager());
-        fragmentList.add(VacuumFragment.newInstance());
-        fragmentList.add(VacuumFragment.newInstance());
-        fragmentList.add(VacuumFragment.newInstance());
+        fragmentList.add(FunctionFragment.newInstance(objectID,"water"));
+        fragmentList.add(FunctionFragment.newInstance(objectID,"vacuum"));
+        fragmentList.add(FunctionFragment.newInstance(objectID,"jet"));
         vp_scroll.setAdapter(commonFragementPagerAdapter);
         vp_scroll.addOnPageChangeListener(this);
         sl_root.getHelper().setCurrentScrollableContainer(fragmentList.get(0));
@@ -142,7 +149,8 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
             tv_page2.setTextColor(Color.parseColor("#435356"));
             ly_page3.setBackgroundResource(R.drawable.rectangle_right);
             tv_page3.setTextColor(Color.parseColor("#435356"));
-        } else if (position == 1){
+        }
+        else if (position == 1){
             ly_page1.setBackgroundResource(R.drawable.rectangle_left);
             tv_page1.setTextColor(Color.parseColor("#435356"));
             ly_page2.setBackgroundResource(R.drawable.rectangle_middle_select);

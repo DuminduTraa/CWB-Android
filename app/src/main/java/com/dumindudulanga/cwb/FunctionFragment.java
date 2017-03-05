@@ -9,9 +9,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +40,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VacuumFragment extends BaseFragment implements View.OnClickListener{
+public class FunctionFragment extends BaseFragment implements View.OnClickListener{
 
     private View view;
     private ScrollView scrollView;
@@ -41,18 +49,27 @@ public class VacuumFragment extends BaseFragment implements View.OnClickListener
     private int lastPosition = 0;
     private int size = 5;
 
-    private RelativeLayout vacuum_activate;
+    private String mObjectID;
+    private String mFunction;
 
-
-    public static VacuumFragment newInstance() {
-        VacuumFragment fragment = new VacuumFragment();
+    public static FunctionFragment newInstance(String objectID, String function) {
+        FunctionFragment fragment = new FunctionFragment();
+        fragment.setObjectID(objectID);
+        fragment.setFunction(function);
         return fragment;
+    }
+
+    void setObjectID(String objectID){
+        mObjectID = objectID;
+    }
+    void setFunction(String function){
+        mFunction = function;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.layout_vacuum, null);
+        view = inflater.inflate(R.layout.layout_station, null);
         initDataSource();
         initRecyclerView(view);
         return view;
@@ -62,9 +79,57 @@ public class VacuumFragment extends BaseFragment implements View.OnClickListener
         scrollView = (ScrollView) view.findViewById(R.id.vacuum_scroll2);
         scrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-        vacuum_activate = (RelativeLayout) view.findViewById(R.id.vacuum_activate2);
-        vacuum_activate.setOnClickListener(this);
+        final TextView priceTextView = (TextView) view.findViewById(R.id.price_text_view);
+        final TextView noOfLotsTextView = (TextView)view.findViewById(R.id.no_of_lots);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("CarWashBay").child(mObjectID);
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(mFunction.equals("water")){
+                    if(dataSnapshot.child("hasWater").getValue().toString().equals("true")){
+                        String waterCents =  dataSnapshot.child("WaterCents").getValue().toString();
+                        String waterAmount =  dataSnapshot.child("waterAmount").getValue().toString();
+                        priceTextView.setText(waterCents+"c"+" for "+waterAmount);
+                    }
+                    else{
+                        priceTextView.setText("N/A");
+                    }
+                }
+                else if(mFunction.equals("vacuum")){
+                    if(dataSnapshot.child("hasVacuum").getValue().toString().equals("true")){
+                        String vacuumDollar =  dataSnapshot.child("VacuumDollar").getValue().toString();
+                        String vacuumAmount =  dataSnapshot.child("vacuumAmount").getValue().toString();
+                        priceTextView.setText("$"+vacuumDollar+" for "+vacuumAmount);
+                    }
+                    else{
+                        priceTextView.setText("N/A");
+                    }
+                }
+                else{
+                    if(dataSnapshot.child("hasJet").getValue().toString().equals("true")){
+                        String jetCents =  dataSnapshot.child("JetCents").getValue().toString();
+                        String jetAmount =  dataSnapshot.child("JetAmount").getValue().toString();
+                        priceTextView.setText(jetCents+"c"+" for "+jetAmount);
+                    }
+                    else{
+                        priceTextView.setText("N/A");
+                    }
+                }
+
+                noOfLotsTextView.setText(dataSnapshot.child("availableBays").getValue().toString());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        Button activateButton = (Button) view.findViewById(R.id.activate_button);
+        activateButton.setOnClickListener(this);
     }
 
     private void initDataSource() {
@@ -89,7 +154,6 @@ public class VacuumFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
-
     public void getDataTask() {
         getDataTask(true);
     }
@@ -111,7 +175,7 @@ public class VacuumFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.vacuum_activate2:
+            case R.id.activate_button:
                 new PostClass("vacuum").execute();
                 break;
         }
@@ -173,15 +237,13 @@ public class VacuumFragment extends BaseFragment implements View.OnClickListener
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String line = "";
                 StringBuilder responseOutput = new StringBuilder();
-                System.out.println("output===============" + br);
+                System.out.println("output" + br);
                 while((line = br.readLine()) != null ) {
                     responseOutput.append(line);
                 }
                 br.close();
 
                 output.append(System.getProperty("line.separator") + "Response " + System.getProperty("line.separator") + System.getProperty("line.separator") + responseOutput.toString());
-
-
 
 
             } catch (MalformedURLException e) {
@@ -227,7 +289,6 @@ public class VacuumFragment extends BaseFragment implements View.OnClickListener
                 result.append(URLEncoder.encode(key, "UTF-8"));
                 result.append("=");
                 result.append(URLEncoder.encode(value.toString(), "UTF-8"));
-
             }
             return result.toString();
         }
