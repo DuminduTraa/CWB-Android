@@ -1,15 +1,21 @@
 package com.dumindudulanga.cwb;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Location;
 import android.nfc.Tag;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -109,6 +115,14 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
                         startActivity(intent);
                     }
                 });
+
+                if (ContextCompat.checkSelfPermission(MapViewActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    mMap.setMyLocationEnabled(true);
+                } else {
+                    Toast.makeText(MapViewActivity.this, "Location Permission not granted", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
@@ -175,7 +189,6 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
             stationAddressTextView.setText(tagDetail.getStationAddress());
             distanceTextView.setText(tagDetail.getDistance());
             noOfLotsTextView.setText(tagDetail.getNoOfLots());
-
         }
     }
 
@@ -207,7 +220,7 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
         void setStationAddress(String mStationAddress){
             stationAddress = mStationAddress;
         }
-        void setDistance(String mDistance){
+         void setDistance(String mDistance){
             distance = mDistance;
         }
         void setNoOfLots(String mNoOfLots){

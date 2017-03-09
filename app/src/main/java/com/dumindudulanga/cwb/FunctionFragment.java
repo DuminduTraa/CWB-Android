@@ -1,5 +1,7 @@
 package com.dumindudulanga.cwb;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,7 +42,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FunctionFragment extends BaseFragment implements View.OnClickListener{
+public class FunctionFragment extends BaseFragment{
 
     private View view;
     private ScrollView scrollView;
@@ -48,6 +50,9 @@ public class FunctionFragment extends BaseFragment implements View.OnClickListen
     private final List<RecyclerBean> allDataSource = new ArrayList<>();
     private int lastPosition = 0;
     private int size = 5;
+
+    private String latitude;
+    private String longitude;
 
     private String mObjectID;
     private String mFunction;
@@ -81,6 +86,8 @@ public class FunctionFragment extends BaseFragment implements View.OnClickListen
 
         final TextView priceTextView = (TextView) view.findViewById(R.id.price_text_view);
         final TextView noOfLotsTextView = (TextView)view.findViewById(R.id.no_of_lots);
+        Button routeButton = (Button)view.findViewById(R.id.route_button);
+        Button activateButton = (Button) view.findViewById(R.id.activate_button);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("CarWashBay").child(mObjectID);
@@ -121,6 +128,8 @@ public class FunctionFragment extends BaseFragment implements View.OnClickListen
 
                 noOfLotsTextView.setText(dataSnapshot.child("availableBays").getValue().toString());
 
+                latitude = dataSnapshot.child("locationGlatitude").getValue().toString();
+                longitude = dataSnapshot.child("locationGlongitude").getValue().toString();
             }
 
             @Override
@@ -128,8 +137,22 @@ public class FunctionFragment extends BaseFragment implements View.OnClickListen
 
             }
         });
-        Button activateButton = (Button) view.findViewById(R.id.activate_button);
-        activateButton.setOnClickListener(this);
+
+        activateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new PostClass("vacuum").execute();
+            }
+        });
+        routeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" +latitude + "," + longitude + "&mode=d" );
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+            }
+        });
     }
 
     private void initDataSource() {
@@ -170,15 +193,6 @@ public class FunctionFragment extends BaseFragment implements View.OnClickListen
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.activate_button:
-                new PostClass("vacuum").execute();
-                break;
-        }
     }
 
     public class RecyclerBean {
