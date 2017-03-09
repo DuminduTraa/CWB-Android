@@ -32,7 +32,6 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
     private ScrollableLayout sl_root;
     private ViewPager vp_scroll;
     private TextView tv_title;
-    private TextView tv_right;
     private ImageView iv_spit;
     private TextView tv_name;
     private ImageView iv_avatar;
@@ -50,6 +49,7 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
     private final List<BaseFragment> fragmentList = new ArrayList<>();
 
     private String objectID;
+    private String stationName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
 
         Intent intent = getIntent();
         objectID = intent.getStringExtra("ObjectID");
+        stationName = intent.getStringExtra("StationName");
 
         setContentView(R.layout.activity_description);
         initView();
@@ -69,7 +70,6 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
         sl_root = (ScrollableLayout) findViewById(R.id.sl_root);
         vp_scroll = (ViewPager) findViewById(R.id.vp_scroll);
         tv_title = (TextView) findViewById(R.id.tv_title);
-        tv_right = (TextView) findViewById(R.id.tv_right);
         iv_spit = (ImageView) findViewById(R.id.iv_spit);
         tv_name = (TextView) findViewById(R.id.tv_name);
         iv_avatar = (ImageView) findViewById(R.id.iv_avatar);
@@ -80,6 +80,9 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
         tv_page2 = (TextView) findViewById(R.id.tv_page2);
         ly_page3 = (RelativeLayout) findViewById(R.id.ly_page3);
         tv_page3 = (TextView) findViewById(R.id.tv_page3);
+
+        tv_title.setText(stationName);
+        tv_name.setText(stationName);
 
         iv_spit.setVisibility(View.GONE);
         tv_title.setTranslationY(-1000);
@@ -127,7 +130,6 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
         vp_scroll.addOnPageChangeListener(this);
         sl_root.getHelper().setCurrentScrollableContainer(fragmentList.get(0));
 
-        tv_right.setOnClickListener(this);
         ly_page1.setOnClickListener(this);
         ly_page2.setOnClickListener(this);
         ly_page3.setOnClickListener(this);

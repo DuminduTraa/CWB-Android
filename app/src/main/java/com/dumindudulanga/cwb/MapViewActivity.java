@@ -110,8 +110,8 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
                     public void onInfoWindowClick(Marker marker) {
                         Intent intent = new Intent(getBaseContext(), DescriptionActivity.class);
                         TagDetail tagDetail =  (TagDetail) marker.getTag();
-                        String objectID = tagDetail.getObjectID();
-                        intent.putExtra("ObjectID", objectID);
+                        intent.putExtra("ObjectID", tagDetail.getObjectID());
+                        intent.putExtra("StationName",tagDetail.getStationName());
                         startActivity(intent);
                     }
                 });

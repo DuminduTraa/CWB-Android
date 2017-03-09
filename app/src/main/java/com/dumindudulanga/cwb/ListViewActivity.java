@@ -58,6 +58,7 @@ public class ListViewActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(getBaseContext(), DescriptionActivity.class);
                         intent.putExtra("ObjectID",objectIDs.get(position));
+                        intent.putExtra("StationName",stationDetails.get(position).getStationName());
                         startActivity(intent);
                     }
                 });

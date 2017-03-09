@@ -18,8 +18,9 @@
         android:layout_below="@+id/iv_avatar"
         android:layout_centerHorizontal="true"
         android:maxLines="2"
-        android:text="w446108264"
+        android:text="Station Name"
         android:textColor="#435356"
-        android:textSize="16sp" />
+        android:textSize="26sp"
+        android:textStyle="bold"/>
 
 </RelativeLayout>
