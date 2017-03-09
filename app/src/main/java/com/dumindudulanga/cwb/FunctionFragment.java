@@ -167,13 +167,12 @@ public class FunctionFragment extends BaseFragment{
                 startActivity(mapIntent);
             }
         });
-        feedback_button.setOnClickListener(new View.OnClickListener({
-             @Override
-                public void onClick(View view){
-            showFeedbackPopUp();
-        }
-        }));
-
+        feedback_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                showFeedbackPopUp();
+            }
+        });
     }
 
     private void initDataSource() {

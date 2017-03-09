@@ -115,6 +115,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_margin="5dp"
+        android:textAlignment="textEnd"
         tools:text="lots"
         android:textSize="12sp"
         android:gravity="bottom"

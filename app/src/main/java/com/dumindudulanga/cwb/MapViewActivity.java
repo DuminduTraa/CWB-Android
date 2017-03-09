@@ -122,7 +122,6 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
                 } else {
                     Toast.makeText(MapViewActivity.this, "Location Permission not granted", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
