@@ -120,9 +120,9 @@ public class DescriptionActivity extends AppCompatActivity implements ViewPager.
         pfl_root.setKeepHeaderWhenRefresh(true);
 
         CommonFragementPagerAdapter commonFragementPagerAdapter = new CommonFragementPagerAdapter(getSupportFragmentManager());
-        fragmentList.add(FunctionFragment.newInstance(objectID,"water"));
-        fragmentList.add(FunctionFragment.newInstance(objectID,"vacuum"));
-        fragmentList.add(FunctionFragment.newInstance(objectID,"jet"));
+        fragmentList.add(FunctionFragment.newInstance(objectID,"water",getApplicationContext()));
+        fragmentList.add(FunctionFragment.newInstance(objectID,"vacuum",getApplicationContext()));
+        fragmentList.add(FunctionFragment.newInstance(objectID,"jet",getApplicationContext()));
         vp_scroll.setAdapter(commonFragementPagerAdapter);
         vp_scroll.addOnPageChangeListener(this);
         sl_root.getHelper().setCurrentScrollableContainer(fragmentList.get(0));

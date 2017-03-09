@@ -2,16 +2,20 @@ package com.dumindudulanga.cwb;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -57,10 +61,16 @@ public class FunctionFragment extends BaseFragment{
     private String mObjectID;
     private String mFunction;
 
-    public static FunctionFragment newInstance(String objectID, String function) {
+    private PopupWindow mPopupWindow;
+    private Button feedback_button;
+
+    private Context mContext;
+
+    public static FunctionFragment newInstance(String objectID, String function,Context context) {
         FunctionFragment fragment = new FunctionFragment();
         fragment.setObjectID(objectID);
         fragment.setFunction(function);
+        fragment.mContext = context;
         return fragment;
     }
 
@@ -81,6 +91,8 @@ public class FunctionFragment extends BaseFragment{
     }
 
     public void initRecyclerView(View view) {
+        mContext = this.getContext();
+
         scrollView = (ScrollView) view.findViewById(R.id.vacuum_scroll2);
         scrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
@@ -88,6 +100,8 @@ public class FunctionFragment extends BaseFragment{
         final TextView noOfLotsTextView = (TextView)view.findViewById(R.id.no_of_lots);
         Button routeButton = (Button)view.findViewById(R.id.route_button);
         Button activateButton = (Button) view.findViewById(R.id.activate_button);
+
+        feedback_button = (Button)view.findViewById(R.id.feedback_button);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("CarWashBay").child(mObjectID);
@@ -153,6 +167,13 @@ public class FunctionFragment extends BaseFragment{
                 startActivity(mapIntent);
             }
         });
+        feedback_button.setOnClickListener(new View.OnClickListener({
+             @Override
+                public void onClick(View view){
+            showFeedbackPopUp();
+        }
+        }));
+
     }
 
     private void initDataSource() {
@@ -193,6 +214,24 @@ public class FunctionFragment extends BaseFragment{
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void showFeedbackPopUp(){
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View customView = inflater.inflate(R.layout.feedback_layout,null);
+
+        mPopupWindow = new PopupWindow(
+                customView,
+                RecyclerView.LayoutParams.WRAP_CONTENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT
+        );
+
+        if(Build.VERSION.SDK_INT>=21){
+            mPopupWindow.setElevation(5.0f);
+        }
+
+        mPopupWindow.showAtLocation(scrollView, Gravity.CENTER,0,0);
     }
 
     public class RecyclerBean {
