@@ -1,6 +1,8 @@
 package com.dumindudulanga.cwb;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -15,10 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.firebase.database.DataSnapshot;
@@ -66,6 +71,19 @@ public class FunctionFragment extends BaseFragment{
 
     private Context mContext;
 
+    private DatabaseReference myRef;
+    private int noPowerCount;
+    private int cantInsertCoinCount;
+    private int noWaterCount;
+    private int cantActivateCount;
+    private float feedbackScore;
+    private int feedbackCount;
+
+    private int noPowerButtonColor;
+    private int cantInsertCoinButtonColor;
+    private int noWaterButtonColor;
+    private int cantActivateButtonColor;
+
     public static FunctionFragment newInstance(String objectID, String function,Context context) {
         FunctionFragment fragment = new FunctionFragment();
         fragment.setObjectID(objectID);
@@ -104,7 +122,7 @@ public class FunctionFragment extends BaseFragment{
         feedback_button = (Button)view.findViewById(R.id.feedback_button);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("CarWashBay").child(mObjectID);
+        myRef = database.getReference("CarWashBay").child(mObjectID);
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -144,6 +162,14 @@ public class FunctionFragment extends BaseFragment{
 
                 latitude = dataSnapshot.child("locationGlatitude").getValue().toString();
                 longitude = dataSnapshot.child("locationGlongitude").getValue().toString();
+
+                feedbackScore = Float.parseFloat(dataSnapshot.child("feedbackSum").getValue().toString());
+                feedbackCount = Integer.parseInt(dataSnapshot.child("feedbackCount").getValue().toString());
+
+                noPowerCount = Integer.parseInt(dataSnapshot.child("noPowerCount").getValue().toString());
+                cantInsertCoinCount = Integer.parseInt(dataSnapshot.child("cantInsertCoinCount").getValue().toString());
+                noWaterCount = Integer.parseInt(dataSnapshot.child("noWaterCount").getValue().toString());
+                cantActivateCount = Integer.parseInt(dataSnapshot.child("cantActivateFromAppCount").getValue().toString());
             }
 
             @Override
@@ -171,6 +197,7 @@ public class FunctionFragment extends BaseFragment{
             @Override
             public void onClick(View view){
                 showFeedbackPopUp();
+                feedback_button.setEnabled(false);
             }
         });
     }
@@ -231,6 +258,112 @@ public class FunctionFragment extends BaseFragment{
         }
 
         mPopupWindow.showAtLocation(scrollView, Gravity.CENTER,0,0);
+
+        final RatingBar ratingBar = (RatingBar) customView.findViewById(R.id.rating_bar);
+        ratingBar.setStepSize(1);
+
+        final ImageButton noPowerButton = (ImageButton) customView.findViewById(R.id.no_power_button);
+        final ImageButton cantInsertCoinButton = (ImageButton) customView.findViewById(R.id.cant_insert_coin_button);
+        final ImageButton noWaterButton = (ImageButton) customView.findViewById(R.id.no_water_button);
+        final ImageButton cantActivateButton = (ImageButton) customView.findViewById(R.id.cant_activate_button);
+
+        final Button sendButton = (Button) customView.findViewById(R.id.feedback_send);
+
+        noPowerButtonColor = Color.TRANSPARENT;
+        cantInsertCoinButtonColor = Color.TRANSPARENT;
+        noWaterButtonColor = Color.TRANSPARENT;
+        cantActivateButtonColor = Color.TRANSPARENT;
+
+
+        noPowerButton.setBackgroundColor(noPowerButtonColor);
+
+        noPowerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(noPowerButtonColor == Color.TRANSPARENT){
+                    noPowerButton.setBackgroundColor(Color.RED);
+                    noPowerButtonColor = Color.RED;
+                }
+                else{
+                    noPowerButton.setBackgroundColor(Color.TRANSPARENT);
+                    noPowerButtonColor = Color.TRANSPARENT;
+                }
+            }
+        });
+
+        cantInsertCoinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(cantInsertCoinButtonColor == Color.TRANSPARENT){
+                    cantInsertCoinButton.setBackgroundColor(Color.RED);
+                    cantInsertCoinButtonColor = Color.RED;
+                }
+                else{
+                    cantInsertCoinButton.setBackgroundColor(Color.TRANSPARENT);
+                    cantInsertCoinButtonColor = Color.TRANSPARENT;
+                }
+            }
+        });
+
+        noWaterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(noWaterButtonColor == Color.TRANSPARENT){
+                    noWaterButton.setBackgroundColor(Color.RED);
+                    noWaterButtonColor = Color.RED;
+                }
+                else{
+                    noWaterButton.setBackgroundColor(Color.TRANSPARENT);
+                    noWaterButtonColor = Color.TRANSPARENT;
+                }
+            }
+        });
+
+        cantActivateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(cantActivateButtonColor == Color.TRANSPARENT){
+                    cantActivateButton.setBackgroundColor(Color.RED);
+                    cantActivateButtonColor = Color.RED;
+                }
+                else{
+                    cantActivateButton.setBackgroundColor(Color.TRANSPARENT);
+                    cantActivateButtonColor = Color.TRANSPARENT;
+                }
+            }
+        });
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                float thisScore = ratingBar.getRating();
+
+                int newFeedbackCount = feedbackCount + 1;
+                float updatedAvgScore = (feedbackScore*feedbackCount + thisScore)/newFeedbackCount;
+
+                myRef.child("feedbackSum").setValue(updatedAvgScore);
+                myRef.child("feedbackCount").setValue(newFeedbackCount);
+
+                if(noPowerButtonColor==Color.RED){
+                    myRef.child("noPowerCount").setValue(noPowerCount+1);
+                }
+                if(cantInsertCoinButtonColor==Color.RED){
+                    myRef.child("cantInsertCoinCount").setValue(cantInsertCoinCount+1);
+                }
+                if(noWaterButtonColor==Color.RED){
+                    myRef.child("noWaterCount").setValue(noWaterCount+1);
+                }
+                if(cantActivateButtonColor==Color.RED){
+                    myRef.child("cantActivateFromAppCount").setValue(cantActivateCount+1);
+                }
+
+                Activity mActivity=FunctionFragment.this.getActivity();
+                Toast.makeText(mActivity, "Your feedback has successfully sent", Toast.LENGTH_SHORT).show();
+
+                mPopupWindow.dismiss();
+            }
+        });
+
     }
 
     public class RecyclerBean {

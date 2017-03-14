@@ -36,7 +36,7 @@
             android:progressBackgroundTint="@color/wallet_secondary_text_holo_dark"
             android:progressTint="@android:color/holo_red_light"
             android:secondaryProgressTint="@android:color/holo_red_light"
-            android:id="@+id/rating_water"
+            android:id="@+id/rating_bar"
             android:numStars="5"
             android:rating="0"
             android:layout_marginLeft="21dp"
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/feedback_coin_logo"
-                android:id="@+id/feedback_power" />
+                android:id="@+id/no_power_button" />
 
             <TextView
                 android:text="No Power"
@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/feedback_coin_logo"
-                android:id="@+id/feedback_coin" />
+                android:id="@+id/cant_insert_coin_button" />
 
             <TextView
                 android:text="Can't Insert Coin"
@@ -117,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/feedback_water_logo"
-                android:id="@+id/feedback_water" />\
+                android:id="@+id/no_water_button" />\
 
             <TextView
                 android:text="No Water"
@@ -137,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/feedback_iphone_logo"
-                android:id="@+id/feedback_iphone" />
+                android:id="@+id/cant_activate_button" />
 
             <TextView
                 android:text="Can't Activate from app"

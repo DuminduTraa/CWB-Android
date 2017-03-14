@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
+    private DatabaseReference myRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +26,7 @@ public class ListViewActivity extends AppCompatActivity {
         final ArrayList<String> objectIDs = new ArrayList<String>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("CarWashBay");
+        myRef = database.getReference("CarWashBay");
         //DatabaseReference carWashRef = myRef.child("CarWashBay");
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -46,6 +47,7 @@ public class ListViewActivity extends AppCompatActivity {
 
                     stationDetails.add(new TileDetail(hasWater, hasVacuum, hasJet, stationName,
                             stationAddress, distance, noOfLots));
+
                 }
 
                 CustomAdapter itemsAdapter = new CustomAdapter(ListViewActivity.this,stationDetails);
