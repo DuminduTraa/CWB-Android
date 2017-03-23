@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -67,7 +68,6 @@ public class FunctionFragment extends BaseFragment{
     private String mFunction;
 
     private PopupWindow mPopupWindow;
-    private Button feedback_button;
 
     private Context mContext;
 
@@ -116,10 +116,20 @@ public class FunctionFragment extends BaseFragment{
 
         final TextView priceTextView = (TextView) view.findViewById(R.id.price_text_view);
         final TextView noOfLotsTextView = (TextView)view.findViewById(R.id.no_of_lots);
+
         Button routeButton = (Button)view.findViewById(R.id.route_button);
         Button activateButton = (Button) view.findViewById(R.id.activate_button);
+        final Button feedbackButton = (Button)view.findViewById(R.id.feedback_button);
 
-        feedback_button = (Button)view.findViewById(R.id.feedback_button);
+        final TextView noPowerCountText = (TextView) view.findViewById(R.id.no_power_text);
+        final TextView noCoinCountText = (TextView) view.findViewById(R.id.no_coin_text);
+        final TextView noWaterCountText = (TextView) view.findViewById(R.id.no_water_text);
+        final TextView noActivateCountText = (TextView) view.findViewById(R.id.no_activate_text);
+
+        final ImageView noPowerImage = (ImageView) view.findViewById(R.id.no_power_image);
+        final ImageView noCoinImage = (ImageView) view.findViewById(R.id.no_coin_image);
+        final ImageView noWaterImage = (ImageView) view.findViewById(R.id.no_water_image);
+        final ImageView noActivateImage = (ImageView) view.findViewById(R.id.no_activate_image);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("CarWashBay").child(mObjectID);
@@ -170,6 +180,23 @@ public class FunctionFragment extends BaseFragment{
                 cantInsertCoinCount = Integer.parseInt(dataSnapshot.child("cantInsertCoinCount").getValue().toString());
                 noWaterCount = Integer.parseInt(dataSnapshot.child("noWaterCount").getValue().toString());
                 cantActivateCount = Integer.parseInt(dataSnapshot.child("cantActivateFromAppCount").getValue().toString());
+
+                noPowerCountText.setText(""+noPowerCount);
+                noCoinCountText.setText(""+cantInsertCoinCount);
+                noWaterCountText.setText(""+noWaterCount);
+                noActivateCountText.setText(""+cantActivateCount);
+
+                if(noPowerCount==0){noPowerImage.setBackgroundColor(Color.GREEN);}
+                else{noPowerImage.setBackgroundColor(Color.RED);}
+
+                if(cantInsertCoinCount==0){noCoinImage.setBackgroundColor(Color.GREEN);}
+                else{noCoinImage.setBackgroundColor(Color.RED);}
+
+                if(noWaterCount==0){noWaterImage.setBackgroundColor(Color.GREEN);}
+                else{noWaterImage.setBackgroundColor(Color.RED);}
+
+                if(cantActivateCount==0){noActivateImage.setBackgroundColor(Color.GREEN);}
+                else{noActivateImage.setBackgroundColor(Color.RED);}
             }
 
             @Override
@@ -193,11 +220,11 @@ public class FunctionFragment extends BaseFragment{
                 startActivity(mapIntent);
             }
         });
-        feedback_button.setOnClickListener(new View.OnClickListener(){
+        feedbackButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 showFeedbackPopUp();
-                feedback_button.setEnabled(false);
+                feedbackButton.setEnabled(false);
             }
         });
     }

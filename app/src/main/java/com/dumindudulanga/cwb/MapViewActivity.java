@@ -60,7 +60,7 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Bitmap locationIconBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.location);
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(locationIconBitmap,80,100,false);
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(locationIconBitmap,45,70,false);
         final BitmapDescriptor locationIcon = BitmapDescriptorFactory.fromBitmap(resizedBitmap);
 
         LatLng southWest = new LatLng(1.27, 103.67);
