@@ -1,33 +1,52 @@
 package com.dumindudulanga.cwb;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
-public class ListViewActivity extends AppCompatActivity {
+public class ListViewActivity extends AppCompatActivity implements
+        GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener
+{
+
     private DatabaseReference myRef;
+    GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
+
+        buildGoogleApiClient();
 
         final ArrayList<TileDetail> stationDetails = new ArrayList<TileDetail>();
         final ArrayList<String> objectIDs = new ArrayList<String>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("CarWashBay");
-        //DatabaseReference carWashRef = myRef.child("CarWashBay");
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -36,13 +55,21 @@ public class ListViewActivity extends AppCompatActivity {
                 Iterable<DataSnapshot> iterator = dataSnapshot.getChildren();
 
                 for (DataSnapshot r : iterator){
+
+                    double latitude = Double.parseDouble(r.child("locationGlatitude").getValue().toString());
+                    double longitude = Double.parseDouble(r.child("locationGlongitude").getValue().toString());
+
+                    Location thisLocation = new Location("A");
+                    thisLocation.setLatitude(latitude);
+                    thisLocation.setLongitude(longitude);
+
                     objectIDs.add(r.getKey());
                     String hasWater = r.child("hasWater").getValue().toString();
                     String hasVacuum = r.child("hasVacuum").getValue().toString();
                     String hasJet = r.child("hasJet").getValue().toString();
                     String stationName = r.child("stName").getValue().toString();
                     String stationAddress = r.child("blkNo").getValue().toString();
-                    String distance = "N/A";
+                    String distance = "" + mLastLocation.distanceTo(thisLocation) + " km";
                     String noOfLots = r.child("availableBays").getValue().toString();
 
                     stationDetails.add(new TileDetail(hasWater, hasVacuum, hasJet, stationName,
@@ -71,4 +98,49 @@ public class ListViewActivity extends AppCompatActivity {
             }
         });
     }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        if (ContextCompat.checkSelfPermission(ListViewActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        } else {
+            Toast.makeText(ListViewActivity.this, "Location Permission not granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        Log.i("Location", "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+        Log.i("Location", "Connection suspended");
+        mGoogleApiClient.connect();
+    }
+
 }
+

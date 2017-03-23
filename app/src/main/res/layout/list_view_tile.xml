@@ -102,10 +102,10 @@
         android:id="@+id/distance_text_view"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_margin="5dp"
         tools:text="distance"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:gravity="bottom"
         android:textColor="@android:color/holo_red_light"/>
 

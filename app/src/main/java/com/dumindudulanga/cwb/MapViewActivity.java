@@ -78,29 +78,26 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
                 Iterable<DataSnapshot> iterator = dataSnapshot.getChildren();
 
                 for (DataSnapshot r : iterator){
-                    try {
-                        double latitude = Double.parseDouble(r.child("locationGlatitude").getValue().toString());
-                        double longitude = Double.parseDouble(r.child("locationGlongitude").getValue().toString());
-                        LatLng location = new LatLng(latitude,longitude);
 
-                        TagDetail tagDetail = new TagDetail();
+                    double latitude = Double.parseDouble(r.child("locationGlatitude").getValue().toString());
+                    double longitude = Double.parseDouble(r.child("locationGlongitude").getValue().toString());
+                    LatLng location = new LatLng(latitude,longitude);
 
-                        tagDetail.setObjectID(r.getKey());
-                        tagDetail.setHasWater(r.child("hasWater").getValue().toString());
-                        tagDetail.setHasVacuum(r.child("hasVacuum").getValue().toString());
-                        tagDetail.setHasJet(r.child("hasJet").getValue().toString());
-                        tagDetail.setStationName(r.child("stName").getValue().toString());
-                        tagDetail.setStationAddress(r.child("blkNo").getValue().toString());
-                        tagDetail.setDistance("N/A");
-                        tagDetail.setNoOfLots(r.child("availableBays").getValue().toString());
+                    TagDetail tagDetail = new TagDetail();
 
-                        Marker marker =  mMap.addMarker(new MarkerOptions().position(location)
-                                .icon(locationIcon));
-                        marker.setTag(tagDetail);
-                    }
-                    catch (NullPointerException e){
-                        Log.d("LatLng","Latitude and Longitude not available");
-                    }
+                    tagDetail.setObjectID(r.getKey());
+                    tagDetail.setHasWater(r.child("hasWater").getValue().toString());
+                    tagDetail.setHasVacuum(r.child("hasVacuum").getValue().toString());
+                    tagDetail.setHasJet(r.child("hasJet").getValue().toString());
+                    tagDetail.setStationName(r.child("stName").getValue().toString());
+                    tagDetail.setStationAddress(r.child("blkNo").getValue().toString());
+                    tagDetail.setDistance("N/A");
+                    tagDetail.setNoOfLots(r.child("availableBays").getValue().toString());
+
+                    Marker marker =  mMap.addMarker(new MarkerOptions().position(location)
+                            .icon(locationIcon));
+                    marker.setTag(tagDetail);
+
                 }
 
                 mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
@@ -122,6 +119,8 @@ public class MapViewActivity extends FragmentActivity implements OnMapReadyCallb
                 } else {
                     Toast.makeText(MapViewActivity.this, "Location Permission not granted", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
 
             @Override
