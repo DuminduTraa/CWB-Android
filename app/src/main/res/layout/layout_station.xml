@@ -154,7 +154,7 @@
                     android:id="@+id/no_power_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/feedback_coin_logo" />
+                    android:src="@mipmap/feedback_power_logo" />
 
                 <TextView
                     android:id="@+id/no_power_text"

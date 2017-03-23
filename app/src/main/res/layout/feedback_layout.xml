@@ -76,7 +76,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/feedback_coin_logo"
+                app:srcCompat="@mipmap/feedback_power_logo"
                 android:id="@+id/no_power_button" />
 
             <TextView
