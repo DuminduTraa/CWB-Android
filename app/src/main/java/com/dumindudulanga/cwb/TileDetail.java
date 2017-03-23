@@ -6,17 +6,20 @@ package com.dumindudulanga.cwb;
 
 public class TileDetail {
 
+    private String mObjectID;
+
     private String mHasWater;
     private String mHasVacuum;
     private String mHasJet;
 
     private String mStationName;
     private String mStationAddress;
-    private String mDistance;
+    private Float mDistance;
     private String mNoOfLots;
 
-    public TileDetail(String hasWater, String hasVacuum, String hasJet, String stationName,
-                      String stationAddress, String distance, String noOfLots){
+    public TileDetail(String objectID, String hasWater, String hasVacuum, String hasJet, String stationName,
+                      String stationAddress, Float distance, String noOfLots){
+        mObjectID = objectID;
         mHasWater = hasWater;
         mHasVacuum = hasVacuum;
         mHasJet = hasJet;
@@ -24,6 +27,9 @@ public class TileDetail {
         mStationAddress = stationAddress;
         mDistance = distance;
         mNoOfLots = noOfLots;
+    }
+    public String getObjectID(){
+        return mObjectID;
     }
 
     public String getStatusHasWater(){
@@ -46,7 +52,7 @@ public class TileDetail {
         return mStationAddress;
     }
 
-    public String getDistance(){
+    public Float getDistance(){
         return mDistance;
     }
 

@@ -63,7 +63,7 @@ public class CustomAdapter extends ArrayAdapter<TileDetail> {
 
         stationNameTextView.setText(currentTileDetail.getStationName());
         stationAddressTextView.setText(currentTileDetail.getStationAddress());
-        distanceTextView.setText(currentTileDetail.getDistance());
+        distanceTextView.setText(""+ currentTileDetail.getDistance() + " km" );
         noOfLotsTextView.setText(currentTileDetail.getNoOfLots());
 
         return listItemView;

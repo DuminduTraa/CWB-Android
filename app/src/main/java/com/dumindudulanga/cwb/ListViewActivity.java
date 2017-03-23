@@ -18,6 +18,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Tile;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ListViewActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener
@@ -43,7 +46,6 @@ public class ListViewActivity extends AppCompatActivity implements
         buildGoogleApiClient();
 
         final ArrayList<TileDetail> stationDetails = new ArrayList<TileDetail>();
-        final ArrayList<String> objectIDs = new ArrayList<String>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("CarWashBay");
@@ -63,19 +65,26 @@ public class ListViewActivity extends AppCompatActivity implements
                     thisLocation.setLatitude(latitude);
                     thisLocation.setLongitude(longitude);
 
-                    objectIDs.add(r.getKey());
                     String hasWater = r.child("hasWater").getValue().toString();
                     String hasVacuum = r.child("hasVacuum").getValue().toString();
                     String hasJet = r.child("hasJet").getValue().toString();
                     String stationName = r.child("stName").getValue().toString();
                     String stationAddress = r.child("blkNo").getValue().toString();
-                    String distance = "" + mLastLocation.distanceTo(thisLocation) + " km";
+                    Float distance = mLastLocation.distanceTo(thisLocation);
                     String noOfLots = r.child("availableBays").getValue().toString();
 
-                    stationDetails.add(new TileDetail(hasWater, hasVacuum, hasJet, stationName,
+                    stationDetails.add(new TileDetail(r.getKey(),hasWater, hasVacuum, hasJet, stationName,
                             stationAddress, distance, noOfLots));
 
                 }
+
+                Collections.sort(stationDetails, new Comparator<TileDetail>() {
+                    @Override
+                    public int compare(TileDetail T1, TileDetail T2) {
+                        return Math.round(T1.getDistance()) - Math.round(T2.getDistance()); // Ascending
+                    }
+
+                });
 
                 CustomAdapter itemsAdapter = new CustomAdapter(ListViewActivity.this,stationDetails);
 
@@ -86,7 +95,7 @@ public class ListViewActivity extends AppCompatActivity implements
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(getBaseContext(), DescriptionActivity.class);
-                        intent.putExtra("ObjectID",objectIDs.get(position));
+                        intent.putExtra("ObjectID",stationDetails.get(position).getObjectID());
                         intent.putExtra("StationName",stationDetails.get(position).getStationName());
                         startActivity(intent);
                     }
