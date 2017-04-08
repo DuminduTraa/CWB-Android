@@ -8,9 +8,12 @@ import android.location.Location;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,23 +32,28 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class ListViewActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener
-{
+        GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
 
     private DatabaseReference myRef;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
+        final ListView listView = (ListView)findViewById(R.id.list_view);
+        final EditText editSearch = (EditText) findViewById(R.id.search_text);
+
         buildGoogleApiClient();
 
         final ArrayList<TileDetail> stationDetails = new ArrayList<TileDetail>();
+        final ArrayList<TileDetail> filteredStationDetails = new ArrayList<TileDetail>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("CarWashBay");
@@ -86,17 +94,43 @@ public class ListViewActivity extends AppCompatActivity implements
 
                 });
 
-                CustomAdapter itemsAdapter = new CustomAdapter(ListViewActivity.this,stationDetails);
+                filteredStationDetails.addAll(stationDetails);
+                listView.setAdapter(new CustomAdapter(ListViewActivity.this,filteredStationDetails));
 
-                ListView listView = (ListView)findViewById(R.id.list_view);
-                listView.setAdapter(itemsAdapter);
+                editSearch.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
+                        filteredStationDetails.clear();
+                        if(text.length() > 0 ){
+                            for (TileDetail td: stationDetails){
+                                if(td.getStationName().toLowerCase(Locale.getDefault()).contains(text)){
+                                    filteredStationDetails.add(td);
+                                }
+                            }
+                        }
+                        else{
+                            filteredStationDetails.addAll(stationDetails);
+                        }
+                        listView.setAdapter(new CustomAdapter(ListViewActivity.this,filteredStationDetails));
+                    }
+                });
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(getBaseContext(), DescriptionActivity.class);
-                        intent.putExtra("ObjectID",stationDetails.get(position).getObjectID());
-                        intent.putExtra("StationName",stationDetails.get(position).getStationName());
+                        intent.putExtra("ObjectID",filteredStationDetails.get(position).getObjectID());
+                        intent.putExtra("StationName",filteredStationDetails.get(position).getStationName());
                         startActivity(intent);
                     }
                 });
