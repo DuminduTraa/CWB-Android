@@ -2,14 +2,18 @@ package com.dumindudulanga.cwb;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,8 +21,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -27,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.ads.formats.NativeAd;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -121,16 +128,6 @@ public class FunctionFragment extends BaseFragment{
         Button activateButton = (Button) view.findViewById(R.id.activate_button);
         final Button feedbackButton = (Button)view.findViewById(R.id.feedback_button);
 
-        final TextView noPowerCountText = (TextView) view.findViewById(R.id.no_power_text);
-        final TextView noCoinCountText = (TextView) view.findViewById(R.id.no_coin_text);
-        final TextView noWaterCountText = (TextView) view.findViewById(R.id.no_water_text);
-        final TextView noActivateCountText = (TextView) view.findViewById(R.id.no_activate_text);
-
-        final ImageView noPowerImage = (ImageView) view.findViewById(R.id.no_power_image);
-        final ImageView noCoinImage = (ImageView) view.findViewById(R.id.no_coin_image);
-        final ImageView noWaterImage = (ImageView) view.findViewById(R.id.no_water_image);
-        final ImageView noActivateImage = (ImageView) view.findViewById(R.id.no_activate_image);
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("CarWashBay").child(mObjectID);
 
@@ -176,27 +173,6 @@ public class FunctionFragment extends BaseFragment{
                 feedbackScore = Float.parseFloat(dataSnapshot.child("feedbackSum").getValue().toString());
                 feedbackCount = Integer.parseInt(dataSnapshot.child("feedbackCount").getValue().toString());
 
-                noPowerCount = Integer.parseInt(dataSnapshot.child("noPowerCount").getValue().toString());
-                cantInsertCoinCount = Integer.parseInt(dataSnapshot.child("cantInsertCoinCount").getValue().toString());
-                noWaterCount = Integer.parseInt(dataSnapshot.child("noWaterCount").getValue().toString());
-                cantActivateCount = Integer.parseInt(dataSnapshot.child("cantActivateFromAppCount").getValue().toString());
-
-                noPowerCountText.setText(""+noPowerCount);
-                noCoinCountText.setText(""+cantInsertCoinCount);
-                noWaterCountText.setText(""+noWaterCount);
-                noActivateCountText.setText(""+cantActivateCount);
-
-                if(noPowerCount==0){noPowerImage.setBackgroundColor(Color.GREEN);}
-                else{noPowerImage.setBackgroundColor(Color.RED);}
-
-                if(cantInsertCoinCount==0){noCoinImage.setBackgroundColor(Color.GREEN);}
-                else{noCoinImage.setBackgroundColor(Color.RED);}
-
-                if(noWaterCount==0){noWaterImage.setBackgroundColor(Color.GREEN);}
-                else{noWaterImage.setBackgroundColor(Color.RED);}
-
-                if(cantActivateCount==0){noActivateImage.setBackgroundColor(Color.GREEN);}
-                else{noActivateImage.setBackgroundColor(Color.RED);}
             }
 
             @Override
@@ -289,76 +265,10 @@ public class FunctionFragment extends BaseFragment{
         final RatingBar ratingBar = (RatingBar) customView.findViewById(R.id.rating_bar);
         ratingBar.setStepSize(1);
 
-        final ImageButton noPowerButton = (ImageButton) customView.findViewById(R.id.no_power_button);
-        final ImageButton cantInsertCoinButton = (ImageButton) customView.findViewById(R.id.cant_insert_coin_button);
-        final ImageButton noWaterButton = (ImageButton) customView.findViewById(R.id.no_water_button);
-        final ImageButton cantActivateButton = (ImageButton) customView.findViewById(R.id.cant_activate_button);
-
         final Button sendButton = (Button) customView.findViewById(R.id.feedback_send);
+        final ImageButton technicalButton = (ImageButton) customView.findViewById(R.id.technical_button);
 
-        noPowerButtonColor = Color.TRANSPARENT;
-        cantInsertCoinButtonColor = Color.TRANSPARENT;
-        noWaterButtonColor = Color.TRANSPARENT;
-        cantActivateButtonColor = Color.TRANSPARENT;
-
-
-        noPowerButton.setBackgroundColor(noPowerButtonColor);
-
-        noPowerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(noPowerButtonColor == Color.TRANSPARENT){
-                    noPowerButton.setBackgroundColor(Color.RED);
-                    noPowerButtonColor = Color.RED;
-                }
-                else{
-                    noPowerButton.setBackgroundColor(Color.TRANSPARENT);
-                    noPowerButtonColor = Color.TRANSPARENT;
-                }
-            }
-        });
-
-        cantInsertCoinButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(cantInsertCoinButtonColor == Color.TRANSPARENT){
-                    cantInsertCoinButton.setBackgroundColor(Color.RED);
-                    cantInsertCoinButtonColor = Color.RED;
-                }
-                else{
-                    cantInsertCoinButton.setBackgroundColor(Color.TRANSPARENT);
-                    cantInsertCoinButtonColor = Color.TRANSPARENT;
-                }
-            }
-        });
-
-        noWaterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(noWaterButtonColor == Color.TRANSPARENT){
-                    noWaterButton.setBackgroundColor(Color.RED);
-                    noWaterButtonColor = Color.RED;
-                }
-                else{
-                    noWaterButton.setBackgroundColor(Color.TRANSPARENT);
-                    noWaterButtonColor = Color.TRANSPARENT;
-                }
-            }
-        });
-
-        cantActivateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(cantActivateButtonColor == Color.TRANSPARENT){
-                    cantActivateButton.setBackgroundColor(Color.RED);
-                    cantActivateButtonColor = Color.RED;
-                }
-                else{
-                    cantActivateButton.setBackgroundColor(Color.TRANSPARENT);
-                    cantActivateButtonColor = Color.TRANSPARENT;
-                }
-            }
-        });
+        final ImageView exit = (ImageView) customView.findViewById(R.id.exit_button);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -371,26 +281,224 @@ public class FunctionFragment extends BaseFragment{
                 myRef.child("feedbackSum").setValue(updatedAvgScore);
                 myRef.child("feedbackCount").setValue(newFeedbackCount);
 
-                if(noPowerButtonColor==Color.RED){
-                    myRef.child("noPowerCount").setValue(noPowerCount+1);
-                }
-                if(cantInsertCoinButtonColor==Color.RED){
-                    myRef.child("cantInsertCoinCount").setValue(cantInsertCoinCount+1);
-                }
-                if(noWaterButtonColor==Color.RED){
-                    myRef.child("noWaterCount").setValue(noWaterCount+1);
-                }
-                if(cantActivateButtonColor==Color.RED){
-                    myRef.child("cantActivateFromAppCount").setValue(cantActivateCount+1);
-                }
 
                 Activity mActivity=FunctionFragment.this.getActivity();
                 Toast.makeText(mActivity, "Your feedback has successfully sent", Toast.LENGTH_SHORT).show();
-
                 mPopupWindow.dismiss();
             }
         });
 
+        technicalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPopupWindow.dismiss();
+                showTechnicalReportPopUp();
+            }
+        });
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPopupWindow.dismiss();
+            }
+        });
+    }
+
+    public void showTechnicalReportPopUp(){
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View customView = inflater.inflate(R.layout.technical_report_layout,null);
+
+        mPopupWindow = new PopupWindow(
+                customView,
+                RecyclerView.LayoutParams.WRAP_CONTENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT
+        );
+
+        if(Build.VERSION.SDK_INT>=21){
+            mPopupWindow.setElevation(5.0f);
+        }
+
+        mPopupWindow.showAtLocation(scrollView, Gravity.CENTER,0,0);
+
+        final ImageButton waterButton = (ImageButton)customView.findViewById(R.id.technical_water_button);
+        final ImageButton vacuumButton = (ImageButton)customView.findViewById(R.id.technical_vacuum_button);
+        final ImageButton jetButton = (ImageButton)customView.findViewById(R.id.technical_jet_button);
+
+        final TextView waterText = (TextView) customView.findViewById(R.id.water_text_view);
+        final TextView vacuumText = (TextView) customView.findViewById(R.id.vacuum_text_view);
+        final TextView jetText = (TextView) customView.findViewById(R.id.jet_text_view);
+        final LinearLayout checkBoxLayout = (LinearLayout) customView.findViewById(R.id.checkbox_layout);
+
+        final ImageView exit = (ImageView) customView.findViewById(R.id.exit_button);
+
+        final CheckBox[] checkBoxes = new CheckBox[8];
+        for(int i = 0; i < 8; i++){
+            checkBoxes[i] = new CheckBox(getContext());
+        }
+
+        checkBoxes[0].setText(R.string.issue1);
+        checkBoxes[1].setText(R.string.issue2);
+        checkBoxes[2].setText(R.string.issue3);
+        checkBoxes[3].setText(R.string.issue4);
+
+        final Button reportSendButton = (Button)customView.findViewById(R.id.technical_report_send);
+        reportSendButton.setBackgroundResource(R.drawable.rectangle_button_grey);
+
+        waterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                waterButton.setBackgroundResource(R.drawable.circle_button_selected);
+                vacuumButton.setBackgroundResource(R.drawable.circle_button);
+                jetButton.setBackgroundResource(R.drawable.circle_button);
+
+                waterText.setTextColor(Color.parseColor("#FF9800"));
+                vacuumText.setTextColor(Color.parseColor("#616161"));
+                jetText.setTextColor(Color.parseColor("#616161"));
+
+                checkBoxes[4].setText(R.string.water_issue5);
+                checkBoxes[5].setText(R.string.water_issue6);
+                checkBoxes[6].setText(R.string.water_issue7);
+
+                checkBoxLayout.removeAllViews();
+
+                for(int i=0; i<7; i++){
+                    checkBoxLayout.addView(checkBoxes[i]);
+                }
+
+                reportSendButton.setBackgroundResource(R.drawable.rectangle_button);
+
+                reportSendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DatabaseReference technicalIssues = FirebaseDatabase.getInstance().
+                                getReference("TechnicalIssues");
+                        int j=1;
+                        for(CheckBox cb : checkBoxes) {
+                            if (cb.isChecked()) {
+                                technicalIssues.child(mObjectID + " water").
+                                        child("Issue" + j).setValue(cb.getText());
+                                j++;
+                            }
+                        }
+                        Activity mActivity=FunctionFragment.this.getActivity();
+                        if(j==1){
+                            Toast.makeText(mActivity, "Please select one or more issues", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(mActivity, "Your feedback has been successfully sent", Toast.LENGTH_SHORT).show();
+                            mPopupWindow.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+        vacuumButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vacuumButton.setBackgroundResource(R.drawable.circle_button_selected);
+                waterButton.setBackgroundResource(R.drawable.circle_button);
+                jetButton.setBackgroundResource(R.drawable.circle_button);
+
+                vacuumText.setTextColor(Color.parseColor("#FF9800"));
+                waterText.setTextColor(Color.parseColor("#616161"));
+                jetText.setTextColor(Color.parseColor("#616161"));
+
+                checkBoxes[4].setText(R.string.vacuum_issue5);
+                checkBoxes[5].setText(R.string.vacuum_issue6);
+                checkBoxes[6].setText(R.string.vacuum_issue7);
+                checkBoxes[7].setText(R.string.vacuum_issue8);
+
+                checkBoxLayout.removeAllViews();
+
+                for(int i=0; i<8; i++){
+                    checkBoxLayout.addView(checkBoxes[i]);
+                }
+
+                reportSendButton.setBackgroundResource(R.drawable.rectangle_button);
+
+                reportSendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DatabaseReference technicalIssues = FirebaseDatabase.getInstance().
+                                getReference("TechnicalIssues");
+                        int j=1;
+                        for(CheckBox cb : checkBoxes) {
+                            if (cb.isChecked()) {
+                                technicalIssues.child(mObjectID + " vacuum").
+                                        child("Issue" + j).setValue(cb.getText());
+                                j++;
+                            }
+                        }
+                        Activity mActivity=FunctionFragment.this.getActivity();
+                        if(j==1){
+                            Toast.makeText(mActivity, "Please select one or more issues", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(mActivity, "Your feedback has been successfully sent", Toast.LENGTH_SHORT).show();
+                            mPopupWindow.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+        jetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jetButton.setBackgroundResource(R.drawable.circle_button_selected);
+                vacuumButton.setBackgroundResource(R.drawable.circle_button);
+                waterButton.setBackgroundResource(R.drawable.circle_button);
+
+                jetText.setTextColor(Color.parseColor("#FF9800"));
+                vacuumText.setTextColor(Color.parseColor("#616161"));
+                waterText.setTextColor(Color.parseColor("#616161"));
+
+                checkBoxes[4].setText(R.string.jet_issue5);
+                checkBoxes[5].setText(R.string.jet_issue6);
+                checkBoxes[6].setText(R.string.jet_issue7);
+
+                checkBoxLayout.removeAllViews();
+
+                for(int i=0; i<7; i++){
+                    checkBoxLayout.addView(checkBoxes[i]);
+                }
+
+                reportSendButton.setBackgroundResource(R.drawable.rectangle_button);
+
+                reportSendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DatabaseReference technicalIssues = FirebaseDatabase.getInstance().
+                                getReference("TechnicalIssues");
+                        int j=1;
+                        for(CheckBox cb : checkBoxes) {
+                            if (cb.isChecked()) {
+                                technicalIssues.child(mObjectID + " jet").
+                                        child("Issue" + j).setValue(cb.getText());
+                                j++;
+                            }
+                        }
+                        Activity mActivity=FunctionFragment.this.getActivity();
+                        if(j==1){
+                            Toast.makeText(mActivity, "Please select one or more issues", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(mActivity, "Your feedback has been successfully sent", Toast.LENGTH_SHORT).show();
+                            mPopupWindow.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPopupWindow.dismiss();
+            }
+        });
     }
 
     public class RecyclerBean {
@@ -505,8 +613,4 @@ public class FunctionFragment extends BaseFragment{
             return result.toString();
         }
     }
-
-
-
-
 }

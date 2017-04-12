@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DBDAD6"
+    android:background="#EEEEEE"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:paddingTop="16dp"
@@ -12,140 +12,52 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp">
 
+    <ImageView
+        android:id="@+id/exit_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/exit_icon"
+        android:layout_gravity="end"/>
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@mipmap/feedback_yellow"/>
+
     <TextView
         android:text="How would you rate our service?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="16dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/maintenance_logo" />
-
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:progressBackgroundTint="@color/wallet_secondary_text_holo_dark"
-            android:progressTint="@android:color/holo_red_light"
-            android:secondaryProgressTint="@android:color/holo_red_light"
-            android:id="@+id/rating_bar"
-            android:numStars="5"
-            android:rating="0"
-            android:layout_marginLeft="21dp"
-            android:layout_marginStart="21dp" />
-
-    </LinearLayout>
-
-
-    <TextView
-        android:text="Technical Issues!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_margin="8dp"
         android:textStyle="bold"
-        android:layout_below="@+id/rating_water"
-        android:layout_centerHorizontal="true" />
+        android:textSize="24sp"
+        android:textAlignment="center"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:progressBackgroundTint="#FFFFFF"
+        android:progressTint="@android:color/holo_red_light"
+        android:secondaryProgressTint="@android:color/holo_red_light"
+        android:id="@+id/rating_bar"
+        android:numStars="5"
+        android:rating="0" />
+
 
     <TextView
         android:text="TELL US MORE.."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="10dp"
+        android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/tell_more_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="26dp">
+        android:layout_marginTop="4dp" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/feedback_power_logo"
-                android:id="@+id/no_power_button" />
-
-            <TextView
-                android:text="No Power"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/feedback_coin_logo"
-                android:id="@+id/cant_insert_coin_button" />
-
-            <TextView
-                android:text="Can't Insert Coin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/feedback_water_logo"
-                android:id="@+id/no_water_button" />\
-
-            <TextView
-                android:text="No Water"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/feedback_iphone_logo"
-                android:id="@+id/cant_activate_button" />
-
-            <TextView
-                android:text="Can't Activate from app"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"/>
-        </LinearLayout>
-    </LinearLayout>
 
     <Button
         android:text="SEND"
@@ -156,5 +68,23 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:id="@+id/feedback_send" />
+
+
+    <ImageButton
+        app:srcCompat="@drawable/maintenance_logo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="22dp"
+        android:textStyle="bold"
+        android:id="@+id/technical_button"
+        android:background="#616161"/>
+
+    <TextView
+        android:text="Submit a Technical Issue Report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>

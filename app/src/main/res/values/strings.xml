@@ -5,4 +5,24 @@
         AIzaSyC_dOOMxC23ISW9Yl3ElIxyZUPlMYOB-QM
     </string>
     <string name="title_activity_signup">SignupActivity</string>
+
+    <string name="issue1">No light on the machine</string>
+    <string name="issue2">Coin rejected</string>
+    <string name="issue3">Coin stuck and no service</string>
+    <string name="issue4">Counter start but no service</string>
+
+    <string name="water_issue5">No water</string>
+    <string name="water_issue6">Low water</string>
+    <string name="water_issue7">Water leaking</string>
+
+    <string name="vacuum_issue5">No suction</string>
+    <string name="vacuum_issue6">Low suction</string>
+    <string name="vacuum_issue7">Motor running no stop</string>
+    <string name="vacuum_issue8">Hose damaged</string>
+
+    <string name="jet_issue5">Gun damaged</string>
+    <string name="jet_issue6">Gun leaking</string>
+    <string name="jet_issue7">Gun missing</string>
+
+
 </resources>
