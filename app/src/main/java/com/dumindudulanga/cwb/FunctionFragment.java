@@ -528,7 +528,7 @@ public class FunctionFragment extends BaseFragment{
             Log.e("YEs","YesYes");
             HttpURLConnection client = null;
             try {
-                URL url = new URL("http://cwbfirebase.hopto.org:1337/"+activate_part);
+                URL url = new URL("http://192.168.8.103:1337/"+activate_part);
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
                 JSONObject postDataParams = new JSONObject();
